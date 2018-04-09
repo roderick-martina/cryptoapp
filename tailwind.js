@@ -46,6 +46,11 @@ View the full documentation at https://tailwindcss.com.
 let colors = {
   'transparent': 'transparent',
 
+  'brand-white': '#F7F8FA',
+  'brand-grey': '#f4f5f7',
+  'brand-blue': '#6fa2fc',
+
+
   'black': '#22292f',
   'grey-darkest': '#3d4852',
   'grey-darker': '#606f7b',
@@ -495,6 +500,7 @@ module.exports = {
     '12': '3rem',
     '16': '4rem',
     '24': '6rem',
+    '28': '7rem',
     '32': '8rem',
     '48': '12rem',
     '64': '16rem',
@@ -664,6 +670,13 @@ module.exports = {
     '4': '1rem',
     '6': '1.5rem',
     '8': '2rem',
+    '10': '2.5rem',
+    '12': '3rem',
+    '16': '4rem',
+    '24': '6rem',
+    '32': '8rem',
+    '48': '12rem',
+    '64': '16rem'
   },
 
 
@@ -692,6 +705,13 @@ module.exports = {
     '4': '1rem',
     '6': '1.5rem',
     '8': '2rem',
+    '10': '2.5rem',
+    '12': '3rem',
+    '16': '4rem',
+    '24': '6rem',
+    '32': '8rem',
+    '48': '12rem',
+    '64': '16rem'
   },
 
 
