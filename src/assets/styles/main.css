@@ -38,6 +38,13 @@
   .outline-none:focus{
     outline: none;
   }
+  .btn:hover{
+    transform: translateY(-1px);
+    transition: all .15s ease;
+    box-shadow:
+    0 4px 8px 0 rgba(0,0,0,0.12),
+    0 2px 4px 0 rgba(0,0,0,0.08);
+  }
  /**
   * This injects all of Tailwind's utility classes, generated based on your
   * config file.

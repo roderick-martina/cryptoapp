@@ -9,7 +9,7 @@
             <FilterSelectButton class="w-32">Token</FilterSelectButton>
             <div class="flex flex-row w-full justify-end">
             <Button class="mr-1">
-                <span slot="text" class="font-medium outline-none">Next</span>
+                <span slot="text" class="font-medium outline-none">Next 100</span>
                 <span slot="svg">
                     <svg class="w-4 h-3 ml-1" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                     viewBox="0 0 31.49 31.49" style="enable-background:new 0 0 31.49 31.49;" xml:space="preserve">
