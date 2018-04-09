@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-block relative w-28 mt-8 mr-1">
+  <div class="relative mr-1">
     <select class="font-medium block appearance-none outline-none w-full bg-white text-black hover:border-grey px-4 py-3 pr-8 rounded shadow">
       <option><slot></slot></option>
       <option>Default</option>
