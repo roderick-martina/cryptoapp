@@ -4,12 +4,18 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import styles from './assets/styles/main.css';
+import store from './store.js'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  data: {
+    privateState: {},
+    sharedState: store.state
+  },
 })
