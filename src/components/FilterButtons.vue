@@ -1,5 +1,4 @@
 <template>
-  <div class="container mx-auto">
               <div class="flex flex-row">
             <FilterSelectButton>All</FilterSelectButton>
             <FilterSelectButton>Coins</FilterSelectButton>
@@ -21,7 +20,6 @@
             </Button>
             </div>
               </div>
-          </div>
 </template>
 <script>
 import FilterSelectButton from '@/components/FilterSelectButton';

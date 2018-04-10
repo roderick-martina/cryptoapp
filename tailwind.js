@@ -49,6 +49,7 @@ let colors = {
   'brand-white': '#F7F8FA',
   'brand-grey': '#f4f5f7',
   'brand-blue': '#6fa2fc',
+  'brand-grey-dark': '#9da5b4',
 
 
   'black': '#22292f',
