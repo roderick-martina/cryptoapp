@@ -13,7 +13,8 @@ const state = {
         }      
     ],
     cryptoList: [],
-    tmplist: []  //don't remove temp list otherwise it won't work
+    tmplist: [],  //don't remove temp list otherwise it won't work
+    currentPage: 1
   }
 // mutations are operations that actually mutates the state.
 // each mutation handler gets the entire state tree as the
@@ -23,7 +24,17 @@ const state = {
 const mutations = {
     initialLoad(){
       // axios.get('https://api.coinmarketcap.com/v1/ticker/', {
-        axios.get('https://min-api.cryptocompare.com/data/top/totalvol?limit=10&tsym=EUR')
+        console.log(this.state.currentPage)
+        this.state.cryptoList = []
+        this.state.tmplist = []
+        axios.get('https://min-api.cryptocompare.com/data/top/totalvol', {
+          params: {
+
+            limit: 10,
+            tsym: 'EUR',
+            page: this.state.currentPage
+          }
+        })
         .then(res => {
               res.data.Data.reduce((newItem, item) => {
               newItem = {
@@ -45,13 +56,15 @@ const mutations = {
               }).then(res => {
                 var cryptoName = Object.values(res.data.DISPLAY)[0]
                 var cyptoInfo = Object.values(cryptoName)[0]
-                console.log(cyptoInfo)
                 item.extendedInfo = cyptoInfo
                 this.state.cryptoList.push(item)
               })
             })
             
         })
+    },
+    nextPage() {
+      this.state.currentPage ++;
     },
 }
 
