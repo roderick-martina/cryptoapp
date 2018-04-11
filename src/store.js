@@ -12,7 +12,7 @@ const state = {
             name: 'Bitcoin'
         }      
     ],
-    data: [] 
+    cryptoList: [] 
   }
 // mutations are operations that actually mutates the state.
 // each mutation handler gets the entire state tree as the
@@ -21,14 +21,39 @@ const state = {
 // for debugging purposes
 const mutations = {
     initialLoad(){
-      axios.get('https://api.coinmarketcap.com/v1/ticker/', {
-            params: {
-                limit: 10,
-                convert: 'EUR'
-            }
-        }).then(res => {
-             state.coin = res.data;
+      // axios.get('https://api.coinmarketcap.com/v1/ticker/', {
+        axios.get('https://min-api.cryptocompare.com/data/top/totalvol?limit=10&tsym=EUR')
+        .then(res => {
+              res.data.Data.reduce((newItem, item) => {
+              newItem = {
+                name : item.CoinInfo.FullName,
+                id : item.CoinInfo.Id,
+                ImageUrl : item.CoinInfo.ImageUrl,
+                symbol : item.CoinInfo.Name
+              }
+              this.state.cryptoList.push(newItem)
+            }, {}) 
+
+            //get more information about the crypto coin and add it to the list
+            state.cryptoList.map(item => {
+              axios.get('https://min-api.cryptocompare.com/data/pricemultifull', {
+                params: {
+                  fsyms: item.symbol,
+                  tsyms: 'EUR'
+                }
+              }).then(res => {
+                var cryptoName = Object.values(res.data.DISPLAY)[0]
+                var cyptoInfo = Object.values(cryptoName)[0]
+                item.extendedInfo = cyptoInfo
+              })
+            })
         })
+    },
+    loadPrice(list,){
+      // this.state.coin.reduce((newItem, item) => {
+      //   this.state.list.push('');
+      // }, {})
+      // console.log(this.state.list);
     }
 }
 
@@ -40,8 +65,8 @@ const actions = {
 
   // getters are functions
 const getters = {
-    getCoins(state){
-      return state.coin;
+    getCryptoList(state){
+      return state.cryptoList;
     }
   }
   

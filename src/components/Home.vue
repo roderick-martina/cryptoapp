@@ -17,14 +17,14 @@
               </div>
           </template-inline>
           <crypto-card v-for="(coin, index) in coins" :key="index">
-              <span class="mx-6 flex flex-col justify-center" slot="index">{{coin.rank}}</span>
-                <img class="w-6 h-6 " slot="image" src="../assets/logo.png"/>
+              <span class="mx-6 flex flex-col justify-center" slot="index">{{index + 1}}</span>
+                <img class="w-6 h-6 " slot="image" :src="imageLink(coin.ImageUrl)"/>
                 <span class="ml-2 text-xl" slot="currency">{{coin.name}}</span>
-                <span slot="marketCap" class="flex-1">{{coin.market_cap_eur}}</span>
-                <span class="ml-8 w-24" slot="price">{{coin.price_eur}}</span>
-                <span class="flex-1" slot="volume">null</span>
-                <span class="flex-1" slot="supply">{{coin.available_supply}}</span>
-                <span class="flex-1" slot="change">{{coin.percent_change_24h}}%</span>
+                <span slot="marketCap" class="flex-1">{{coin.extendedInfo.MKTCAP}}</span>
+                <span class="ml-8 w-24" slot="price">{{coin.extendedInfo.PRICE}}</span>
+                <span class="flex-1" slot="volume">{{coin.extendedInfo.TOTALVOLUME24HTO}}</span>
+                <span class="flex-1" slot="supply">{{coin.extendedInfo.SUPPLY}}</span>
+                <span class="flex-1" slot="change">{{coin.extendedInfo.CHANGE24HOUR}}%</span>
                 <span class="flex-1" slot="graph"></span>
           </crypto-card>
             </div>
@@ -42,13 +42,18 @@ export default {
             return this.$store.state.crypto
         },
         coins() {
-            return this.$store.getters.getCoins;
-        }
+            return this.$store.getters.getCryptoList;
+        },
     },
     components: {
         Search,
         FilterButtons,
         CryptoCard
+    },
+    methods: {
+        imageLink(link) {
+            return 'https://www.cryptocompare.com' + link;
+        }
     },
     data() {
         return{
@@ -56,7 +61,8 @@ export default {
     },
     created(){
         this.$store.commit('initialLoad');
-    }
+        
+    },
   
 }
 </script>
