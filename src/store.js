@@ -12,7 +12,8 @@ const state = {
             name: 'Bitcoin'
         }      
     ],
-    cryptoList: [] 
+    cryptoList: [],
+    tmplist: []  //don't remove temp list otherwise it won't work
   }
 // mutations are operations that actually mutates the state.
 // each mutation handler gets the entire state tree as the
@@ -31,11 +32,11 @@ const mutations = {
                 ImageUrl : item.CoinInfo.ImageUrl,
                 symbol : item.CoinInfo.Name
               }
-              this.state.cryptoList.push(newItem)
+              this.state.tmplist.push(newItem)
             }, {}) 
 
             //get more information about the crypto coin and add it to the list
-            state.cryptoList.map(item => {
+            state.tmplist.map(item => {
               axios.get('https://min-api.cryptocompare.com/data/pricemultifull', {
                 params: {
                   fsyms: item.symbol,
@@ -44,17 +45,14 @@ const mutations = {
               }).then(res => {
                 var cryptoName = Object.values(res.data.DISPLAY)[0]
                 var cyptoInfo = Object.values(cryptoName)[0]
+                console.log(cyptoInfo)
                 item.extendedInfo = cyptoInfo
+                this.state.cryptoList.push(item)
               })
             })
+            
         })
     },
-    loadPrice(list,){
-      // this.state.coin.reduce((newItem, item) => {
-      //   this.state.list.push('');
-      // }, {})
-      // console.log(this.state.list);
-    }
 }
 
 // actions are functions that cause side effects and can involve
