@@ -53,7 +53,7 @@ export default {
     },
     mounted(){
         this.$store.commit('initialLoad');
-        
+        this.$store.commit('search')
     },
   
 }
