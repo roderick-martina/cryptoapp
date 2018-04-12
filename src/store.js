@@ -24,7 +24,6 @@ const state = {
 const mutations = {
     initialLoad(){
       // axios.get('https://api.coinmarketcap.com/v1/ticker/', {
-        console.log(this.state.currentPage)
         this.state.cryptoList = []
         this.state.tmplist = []
         axios.get('https://min-api.cryptocompare.com/data/top/totalvol', {
@@ -78,7 +77,7 @@ const mutations = {
             this.state.searchList.push(newCoin);
           }, [])
           
-          // console.dir(this.state.searchList)
+         
           
         })
     },
