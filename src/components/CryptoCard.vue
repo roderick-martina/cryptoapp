@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full flex flex-row py-6 shadow hover:shadow-md rounded bg-white mt-3 font-medium ">
+    <div class="w-full flex flex-row py-6 shadow hover:shadow-md rounded bg-white mt-3 font-medium cursor-pointer ">
         <slot name="index"></slot>
         <div class="w-64  flex flex-row">
             <slot name="image"></slot>

@@ -14,7 +14,11 @@ const state = {
     // searchResult: ['Bitcoin','42','GIFTO','Ontology','NEO','IOS token','Monero','QTUM','Storm'],
     searchResult: [],
     searchList: [],
-    loading: true
+    loading: true,
+    chartData: [],
+    verticleChartData: [],
+    horizontalChartData: []
+
   }
 // mutations are operations that actually mutates the state.
 // each mutation handler gets the entire state tree as the
@@ -102,8 +106,55 @@ const mutations = {
         this.state.loading = false
       }, 500);
       
+    },
+    getHistoricalData(state,symbol) {
+      this.state.verticleChartData = [] //empty list
+            this.state.horizontalChartData = [] //empty list
+            this.state.chartData = [] //empty list
+      axios.get('https://min-api.cryptocompare.com/data/histoday', {
+        params: {
+          fsym: symbol,
+          tsym: 'EUR',
+          limit: 6
+        }
+      }).then(res => {
+        var data = res.data.Data
+        data.reduce((newDate, oldDate) => {
+          // Create a new JavaScript Date object based on the timestamp
+            // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+            var date = new Date(oldDate.time*1000);
+            // Hours part from the timestamp
+            var hours = date.getHours();
+            // Minutes part from the timestamp
+            var minutes = "0" + date.getMinutes();
+            // Seconds part from the timestamp
+            var seconds = "0" + date.getSeconds();
+            // Will display time in 10:30:23 format
+            var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+            var month = date.getMonth() + 1
+            var day = date.toDateString().split(' ')[2]
+            newDate = {
+              time: date,
+              month: month ,
+              day: day,
+              close: oldDate.close,
+              high: oldDate.high,
+              low: oldDate.low,
+              open: oldDate.open,
+              volumefrom: oldDate.volumefrom,
+              volumeto: oldDate.volumeto
+            }
+            this.state.verticleChartData.push(newDate.close)
+            this.state.horizontalChartData.push(day+'/'+month)
+            this.state.chartData.push(newDate)
+        },[])
+      }) 
+
+
+      
     }
   }
+  
 
 
 // actions are functions that cause side effects and can involve
@@ -122,6 +173,9 @@ const getters = {
     },
     getLoadingState(state) {
       return state.loading;
+    },
+    getChartData(state) {
+      return state.chartData
     }
     
   }
