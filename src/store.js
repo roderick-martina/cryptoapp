@@ -15,6 +15,7 @@ const state = {
     searchResult: [],
     searchList: [],
     loading: true,
+    chartLoading: true,
     chartData: [],
     verticleChartData: [],
     horizontalChartData: []
@@ -147,6 +148,7 @@ const mutations = {
             this.state.verticleChartData.push(newDate.close)
             this.state.horizontalChartData.push(day+'/'+month)
             this.state.chartData.push(newDate)
+            this.state.chartLoading = false
         },[])
       }) 
 

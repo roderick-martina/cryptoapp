@@ -52,9 +52,6 @@ export default {
 
             })
         },
-        test(){
-            console.log('clicked')
-        }
     },
     data() {
         return{
