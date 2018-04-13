@@ -7,5 +7,11 @@ export default {
   mounted () {
     console.log(this.data)
     this.renderChart(this.data, this.options)
-  }
+  },
+  watch: {
+    '$route' (to, from) {
+      // react to route changes...
+      this.renderChart(this.data, this.options)
+    }
+  },
 }

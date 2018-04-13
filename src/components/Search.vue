@@ -6,7 +6,7 @@
             <svg class="h-6 w-6 fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/></svg>
         </button>
         <div v-if="showDropdown"  ref="dropdownSearchBox" class="absolute z-10 mx-auto container h-48 bg-white rounded-b shadow-md mt-32 overflow-y-auto">
-          <div v-for="(result, index) in searchResult" :key="index" class="px-6 py-2  border-t hover:bg-brand-grey font-medium">
+          <div v-for="(result, index) in searchResult" :key="index"  @click="navToDetail(result)" class="px-6 py-2  border-t hover:bg-brand-grey font-medium">
               {{result.name}}
             </div>
             <div v-show="loading" class="lds-roller flex flex-row  w-full justify-center" style="margin-top:3.5rem"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -35,14 +35,13 @@ export default {
       }
     },
     methods: {
-      toggle(){
-        if(this.showDropdown)
-        {
-          this.showDropdown = false;
-        } else if(!this.showDropdown && this.searchResult.length > 0) {
-            sthis.showDropdown = true;
-        }
-      },
+
+      navToDetail(data) {
+            this.$router.push({
+                path: '/coins/' + data.symbol,
+
+            })
+        },
       search(){
       this.$store.commit('getTestSearchResult', this.searchQuery)
       this.showDropdown = true;
@@ -67,9 +66,6 @@ export default {
         this.search();
       } 
     },
-    test(){
-      console.log('sadasda')
-    }
     },
     created() {
       document.addEventListener('click', this.hideDropdown);

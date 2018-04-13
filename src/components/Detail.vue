@@ -57,14 +57,18 @@ export default {
         this.fetchData()
     },
     watch: {
-    // call again the method if the route changes
-    '$route': 'fetchData'
+    '$route' (to, from) {
+      // react to route changes...
+      this.renderChart(this.data, this.options)
+    }
   },
   methods: {
       fetchData() {
         this.$store.commit('getHistoricalData',this.symbol)
       }
   },
+
+  
     data() {
         return{
             
