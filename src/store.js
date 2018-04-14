@@ -125,6 +125,8 @@ const mutations = {
       state.activeCurrency = val
     },
     getCoinInfo(state,symbol){
+      state.currentCoin = [] 
+      this.state.chartLoading = true
       axios.get('https://min-api.cryptocompare.com/data/coin/generalinfo',{
         params:{
           fsyms: symbol,
@@ -132,10 +134,21 @@ const mutations = {
         }
       }).then(res => {
         var data = res.data.Data[0].CoinInfo
-        console.log(data)
         data.ImageUrl = 'https://www.cryptocompare.com' + data.ImageUrl
         state.currentCoin = data
-        this.state.chartLoading = false
+        axios.get('https://min-api.cryptocompare.com/data/pricemultifull', {
+              params: {
+                fsyms: state.currentCoin.Name,
+                tsyms: this.state.activeCurrency,
+                extraParams: this.state.apiAppName
+              }
+            }).then(res => {
+              var cryptoName = Object.values(res.data.DISPLAY)[0]
+              var cyptoInfo = Object.values(cryptoName)[0]
+              state.currentCoin.extendedInfo = cyptoInfo
+              this.state.chartLoading = false
+            })
+        
 
       })
     }
