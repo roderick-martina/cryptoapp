@@ -23,7 +23,8 @@ const state = {
     currencys: ['EUR', 'USD'],
     activeCurrency: 'EUR',
     apiAppName: 'c2go',
-    currentCoin: null
+    currentCoin: [],
+    detailError: []
 
   }
 // mutations are operations that actually mutates the state.
@@ -126,6 +127,7 @@ const mutations = {
     },
     getCoinInfo(state,symbol){
       state.currentCoin = [] 
+      this.state.detailError = []
       this.state.chartLoading = true
       axios.get('https://min-api.cryptocompare.com/data/coin/generalinfo',{
         params:{
@@ -133,7 +135,12 @@ const mutations = {
           tsym: state.activeCurrency
         }
       }).then(res => {
-        var data = res.data.Data[0].CoinInfo
+        if(res.data.Response == "Error"){
+          var msg = res.data.Message
+          this.state.detailError.push(msg)
+          this.state.chartLoading = false
+        }else {
+          var data = res.data.Data[0].CoinInfo
         data.ImageUrl = 'https://www.cryptocompare.com' + data.ImageUrl
         state.currentCoin = data
         axios.get('https://min-api.cryptocompare.com/data/pricemultifull', {
@@ -148,8 +155,7 @@ const mutations = {
               state.currentCoin.extendedInfo = cyptoInfo
               this.state.chartLoading = false
             })
-        
-
+        }
       })
     }
   }

@@ -6,7 +6,8 @@
             <div v-if="chartLoading" class="h-full py-32">
                 <div class="lds-roller flex flex-row  w-full justify-center" style="margin-top:3.5rem"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
-            <div v-if="!chartLoading" class="flex flex-row  w-full mt-10">
+            <div v-if="error.length > 0" class="font-medium text-center w-full h-64">{{error[0]}}</div>
+            <div v-if="!chartLoading && error.length == 0" class="flex flex-row  w-full mt-10">
                 <LineChart  :data="Data" :options="this.options" class="" style=" width:70%; margin-right:5%"/>
                 <div class="rounded shadow bg-white flex flex-col" style="width:30%">
                 <div class="flex flex-row">
@@ -23,7 +24,7 @@
                 </div>
                 <div class="flex row px-8 pt-4 px-4 font-medium">
                     <span class="flex-1">Supply:</span>
-                    <span class="flex-1 text-right">{{coin.extendedInfo.SUPPLY}}</span>
+                    <span class="w-full text-right">{{coin.extendedInfo.SUPPLY}}</span>
                 </div>
                 <div class="flex row px-8 pt-4 px-4 font-medium">
                     <span class="flex-1">Open(24H):</span>
@@ -39,7 +40,7 @@
                 </div>
                 <div class="flex row px-8 pt-4 px-4 font-medium">
                     <span class="flex-1">Change(24H):</span>
-                    <span :class="[checkPrice(coin.extendedInfo.CHANGE24HOUR) ? 'text-red' : 'text-green', 'flex-1 text-right']">{{coin.extendedInfo.CHANGE24HOUR}}</span>
+                    <span :class="[checkPrice(coin.extendedInfo.CHANGE24HOUR.substr(2)) ? 'text-red' : 'text-green', 'flex-1 text-right']">{{coin.extendedInfo.CHANGE24HOUR}}</span>
                 </div>
                 <div class="flex row px-8 pt-4 px-4 font-medium">
                     <span class="flex-1">Change(%)(24H):</span>
@@ -64,6 +65,7 @@
 import LineChart from '@/components/chart/LineChart'
 import Search from '@/components/Search';
 import Footer from '@/components/Footer'
+
 
 export default {
   components: {
@@ -98,24 +100,27 @@ export default {
                     }]
             }            
             return chartData
+        },
+        error() {
+            return this.$store.state.detailError
         }
     },
-    mounted() {
-        this.fetchData()
+    created() {
+        this.fetchData(this.symbol)
         this.$store.commit('search')
     },
     watch: {
-    '$route' (to, from) {
+    '$route.params.name': function(name)  {
       // react to route changes...
-      this.renderChart(this.data, this.options)
-      this.fetchData()
+        this.fetchData(name)
+        this.$store.commit('search')
       console.log('refresh')
     }
   },
   methods: {
-      fetchData() {
-        this.$store.commit('getHistoricalData',this.symbol)
-        this.$store.commit('getCoinInfo', this.symbol)
+      fetchData(symbol) {
+        this.$store.commit('getHistoricalData',symbol)
+        this.$store.commit('getCoinInfo', symbol)
       },
       checkPrice(str){
             var char = str.substr(0, 1)
@@ -163,11 +168,8 @@ export default {
                     }]
                 },
                 tooltips: {
-                    // backgroundColor: "rgba(244,245,247,100)",
-                    // backgroundColor: "rgba(115,116,118,100)"
                     xPadding: 12,
                     yPadding: 12,
-                    // caretSize: 
                     displayColors: false,
                     callbacks: {
                         afterTitle: function(tooltipItem,data) {
