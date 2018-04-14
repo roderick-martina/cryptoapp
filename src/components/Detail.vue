@@ -3,9 +3,15 @@
     <Search/>
     <section class="bg-brand-grey w-screen py-10 mt-10">
          <div class="container mx-auto">
-            <LineChart v-if="!chartLoading"  :data="Data" :options="this.options" class="mt-10"/>
             <div v-if="chartLoading" class="h-full py-32">
                 <div class="lds-roller flex flex-row  w-full justify-center" style="margin-top:3.5rem"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
+            <div v-if="!chartLoading" class="flex flex-row  w-full mt-10">
+                <LineChart  :data="Data" :options="this.options" class="w-3/4"/>
+                <div class="w-1/4 rounded shadow h-64 bg-white flex">
+                    <img class="w-6 h-6 ml-4 mt-4" slot="image" :src="coin.ImageUrl"/>
+                    <h2 class="ml-4 mt-4 text-xl">{{coin.FullName}}</h2>
+                </div>
             </div>
          </div>
     </section>
@@ -33,6 +39,9 @@ export default {
         chartLoading(){
             return this.$store.state.chartLoading
         },
+        coin(){
+            return this.$store.state.currentCoin
+        },
         Data() { 
                 var chartData = {
                     labels: this.horizontalChartData,
@@ -48,16 +57,19 @@ export default {
     },
     mounted() {
         this.fetchData()
+        this.$store.commit('search')
     },
     watch: {
     '$route' (to, from) {
       // react to route changes...
       this.renderChart(this.data, this.options)
+      this.fetchData()
     }
   },
   methods: {
       fetchData() {
         this.$store.commit('getHistoricalData',this.symbol)
+        this.$store.commit('getCoinInfo', this.symbol)
       }
   },
     data() {

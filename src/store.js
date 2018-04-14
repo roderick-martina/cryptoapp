@@ -22,7 +22,8 @@ const state = {
     horizontalChartData: [],
     currencys: ['EUR', 'USD'],
     activeCurrency: 'EUR',
-    apiAppName: 'c2go'
+    apiAppName: 'c2go',
+    currentCoin: null
 
   }
 // mutations are operations that actually mutates the state.
@@ -31,53 +32,6 @@ const state = {
 // mutations must be synchronous and can be recorded by plugins
 // for debugging purposes
 const mutations = {
-    loadData(state){
-      // axios.get('https://api.coinmarketcap.com/v1/ticker/', {
-        this.state.cryptoList = []
-        this.state.tmplist = []
-        axios.get('https://min-api.cryptocompare.com/data/top/totalvol', {
-          params: {
-            limit: 10,
-            tsym: state.activeCurrency,
-            page: state.currentPage,
-            extraParams: state.apiAppName
-          }
-        })
-        .then(res => {
-              let data = res.data.Data
-              if(data.length < 1) {
-                
-              }
-              else {
-                data.reduce((newItem, item) => {
-                  newItem = {
-                    name : item.CoinInfo.FullName,
-                    id : item.CoinInfo.Id,
-                    ImageUrl : item.CoinInfo.ImageUrl,
-                    symbol : item.CoinInfo.Name
-                  }
-                  this.state.tmplist.push(newItem)
-                }, {}) 
-
-                //get more information about the crypto coin and add it to the list
-            state.tmplist.map(item => {
-              axios.get('https://min-api.cryptocompare.com/data/pricemultifull', {
-                params: {
-                  fsyms: item.symbol,
-                  tsyms: state.activeCurrency,
-                  extraParams: state.apiAppName
-                }
-              }).then(res => {
-                var cryptoName = Object.values(res.data.DISPLAY)[0]
-                var cyptoInfo = Object.values(cryptoName)[0]
-                item.extendedInfo = cyptoInfo
-                this.state.cryptoList.push(item)
-                this.state.homePageLoading = false
-              })
-            })
-              }    
-        })
-    },
     nextPage() {
       this.state.currentPage ++;
     },
@@ -164,12 +118,26 @@ const mutations = {
             this.state.verticleChartData.push(newDate.close)
             this.state.horizontalChartData.push(day+'/'+month)
             this.state.chartData.push(newDate)
-            this.state.chartLoading = false
         },[])
       }) 
     },
     changeCurrencyValue(state,val){
       state.activeCurrency = val
+    },
+    getCoinInfo(state,symbol){
+      axios.get('https://min-api.cryptocompare.com/data/coin/generalinfo',{
+        params:{
+          fsyms: symbol,
+          tsym: state.activeCurrency
+        }
+      }).then(res => {
+        var data = res.data.Data[0].CoinInfo
+        console.log(data)
+        data.ImageUrl = 'https://www.cryptocompare.com' + data.ImageUrl
+        state.currentCoin = data
+        this.state.chartLoading = false
+
+      })
     }
   }
   
@@ -206,7 +174,7 @@ const actions = {
                 newItem = {
                   name : item.CoinInfo.FullName,
                   id : item.CoinInfo.Id,
-                  ImageUrl : item.CoinInfo.ImageUrl,
+                  ImageUrl : 'https://www.cryptocompare.com' + item.CoinInfo.ImageUrl,
                   symbol : item.CoinInfo.Name
                 }
                 this.state.tmplist.push(newItem)
@@ -249,7 +217,6 @@ const actions = {
             if(data.length < 1) {
               setTimeout(() => {
                 this.state.currentPage ++
-                console.log(this.state.homePageLoading)
                 context.dispatch('loadData')
                 console.log('error: load again')
               }, 500);
@@ -260,7 +227,7 @@ const actions = {
                 newItem = {
                   name : item.CoinInfo.FullName,
                   id : item.CoinInfo.Id,
-                  ImageUrl : item.CoinInfo.ImageUrl,
+                  ImageUrl : 'https://www.cryptocompare.com' + item.CoinInfo.ImageUrl,
                   symbol : item.CoinInfo.Name
                 }
                 this.state.tmplist.push(newItem)

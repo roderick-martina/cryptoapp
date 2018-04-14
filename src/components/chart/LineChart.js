@@ -5,7 +5,6 @@ export default {
   extends: Line,
   props: ['data', 'options'],
   mounted () {
-    console.log(this._data)
     this.renderChart(this.data, this.options)
   },
   watch: {

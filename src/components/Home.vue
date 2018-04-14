@@ -10,7 +10,7 @@
                 </div>
                 <crypto-card v-if="!loading" v-for="(coin, index) in coins" :key="index" @click.native="navToDetail(coin.symbol)">
                     <span class="mx-6 flex flex-col justify-center" slot="index">{{index + 1}}</span>
-                        <img class="w-6 h-6 " slot="image" :src="imageLink(coin.ImageUrl)"/>
+                        <img class="w-6 h-6 " slot="image" :src="coin.ImageUrl"/>
                         <span class="ml-2 text-xl" slot="currency">{{coin.name}}</span>
                         <span class="flex-1" slot="marketCap">{{coin.extendedInfo.MKTCAP}}</span>
                         <span class="flex-1" slot="price">{{coin.extendedInfo.PRICE}}</span>
@@ -52,9 +52,6 @@ export default {
         
     },
     methods: {
-        imageLink(link) {
-            return 'https://www.cryptocompare.com' + link;
-        },
         checkPrice(str){
             var char = str.substr(0, 1)
             if (char == '-') {
@@ -64,6 +61,7 @@ export default {
             }
         },
         navToDetail(sym) {
+            
             this.$router.push({
                 path: '/coins/' + sym,
 
