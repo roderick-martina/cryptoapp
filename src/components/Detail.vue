@@ -41,15 +41,7 @@ export default {
                         borderColor: '#6772e5',
                         data: this.verticleChartData,
                     }]
-
-                    // labels: ["28/1", "29/1", "30/1", "31/1", "1/2", "2/2", "3/2"],
-                    // datasets: [{
-                    //     backgroundColor: '#6fa2fc',
-                    //     borderColor: '#6772e5',
-                    //     data: [9500, 9600, 9700, 9000, 9100, 8900, 9300],
-                    // }]
-            }
-            
+            }            
             return chartData
         }
     },

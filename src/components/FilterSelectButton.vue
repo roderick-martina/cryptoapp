@@ -27,7 +27,7 @@ export default {
         console.log(selected)
           if(selected != this.activeCurrency){
             this.$store.commit('changeCurrencyValue',selected);
-            this.$store.commit('initialLoad');
+            this.$store.dispatch('loadData')
           }
       }
   },

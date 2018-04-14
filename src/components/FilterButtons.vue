@@ -32,7 +32,7 @@ export default {
   methods: {
       nextPage() { 
           this.$store.commit('nextPage');
-          this.$store.commit('initialLoad');
+        this.$store.dispatch('loadData')
       },
   }
 }

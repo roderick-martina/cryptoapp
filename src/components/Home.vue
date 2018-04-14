@@ -5,7 +5,10 @@
             <div class="container mx-auto">
           <FilterButtons/>
             <CryptoTitles/>
-                <crypto-card v-for="(coin, index) in coins" :key="index" @click.native="navToDetail(coin.symbol)">
+                <div v-if="loading" class="h-full py-32">
+                    <div class="lds-roller flex flex-row  w-full justify-center" style="margin-top:3.5rem"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                </div>
+                <crypto-card v-if="!loading" v-for="(coin, index) in coins" :key="index" @click.native="navToDetail(coin.symbol)">
                     <span class="mx-6 flex flex-col justify-center" slot="index">{{index + 1}}</span>
                         <img class="w-6 h-6 " slot="image" :src="imageLink(coin.ImageUrl)"/>
                         <span class="ml-2 text-xl" slot="currency">{{coin.name}}</span>
@@ -36,6 +39,9 @@ export default {
         },
         activeCurrency() {
              return this.$store.state.activeCurrency;
+        },
+        loading(){
+            return this.$store.state.homePageLoading;
         }
     },
     components: {
@@ -70,7 +76,7 @@ export default {
         }
     },
     mounted(){
-        this.$store.commit('initialLoad');
+        this.$store.dispatch('loadData')
         this.$store.commit('search')
     },
   
