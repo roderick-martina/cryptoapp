@@ -17,6 +17,7 @@ const state = {
     homePageLoading: true,
     searchLoading: true,
     chartLoading: true,
+    coinLoading: true,
     chartData: [],
     verticleChartData: [],
     horizontalChartData: [],
@@ -80,9 +81,10 @@ const mutations = {
       
     },
     getHistoricalData(state,symbol) {
+      this.state.chartLoading = true
       this.state.verticleChartData = [] //empty list
-            this.state.horizontalChartData = [] //empty list
-            this.state.chartData = [] //empty list
+      this.state.horizontalChartData = [] //empty list
+      this.state.chartData = [] //empty list
       axios.get('https://min-api.cryptocompare.com/data/histoday', {
         params: {
           fsym: symbol,
@@ -119,6 +121,8 @@ const mutations = {
             this.state.verticleChartData.push(newDate.close)
             this.state.horizontalChartData.push(day+'/'+month)
             this.state.chartData.push(newDate)
+            this.state.chartLoading = false
+
         },[])
       }) 
     },
@@ -128,7 +132,7 @@ const mutations = {
     getCoinInfo(state,symbol){
       state.currentCoin = [] 
       this.state.detailError = []
-      this.state.chartLoading = true
+      this.state.coinLoading = true
       axios.get('https://min-api.cryptocompare.com/data/coin/generalinfo',{
         params:{
           fsyms: symbol,
@@ -153,7 +157,8 @@ const mutations = {
               var cryptoName = Object.values(res.data.DISPLAY)[0]
               var cyptoInfo = Object.values(cryptoName)[0]
               state.currentCoin.extendedInfo = cyptoInfo
-              this.state.chartLoading = false
+              this.state.coinLoading = false
+              
             })
         }
       })
@@ -182,7 +187,6 @@ const actions = {
             if(data.length < 1) {
               setTimeout(() => {
                 // this.state.currentPage ++
-                console.log(this.state.homePageLoading)
                 context.dispatch('LoadAgain')
                 console.log('error: load again')
               }, 500);

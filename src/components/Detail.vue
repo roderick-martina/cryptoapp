@@ -1,9 +1,9 @@
 <template>
-    <section>
+    <section style="overflow-x:hidden">
     <Search/>
-    <section class="bg-brand-grey w-screen py-10 mt-10">
+    <section class="bg-brand-grey w-screen py-10 mt-10 ">
          <div class="container mx-auto">
-            <div v-if="chartLoading" class="h-full py-32">
+            <div v-if="chartLoading || chartData " class="h-full py-32">
                 <div class="lds-roller flex flex-row  w-full justify-center" style="margin-top:3.5rem"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
             <div v-if="error.length > 0" class="font-medium text-center w-full h-64">
@@ -11,7 +11,9 @@
                 <p class="mt-1">Search for another currency or click the button to go the homepage</p>
                 <button class="rounded bg-brand-blue py-3 px-4 mt-4 font-medium text-white outline-none btn" @click="navToHome">Homepage</button>
             </div>
-            <div v-if="!chartLoading && error.length == 0" class="flex flex-row  w-full mt-10">
+            <button v-if="!chartLoading && !chartData && error.length == 0" class="rounded bg-brand-blue py-3 px-4 font-medium text-white outline-none btn" @click="navToHome">Home</button>
+            <div v-if="!chartLoading && !chartData && error.length == 0" class="flex flex-row  w-full mt-10">
+                
                 <LineChart  :data="Data" :options="this.options" class="" style=" width:70%; margin-right:5%"/>
                 <div class="rounded shadow bg-white flex flex-col" style="width:30%">
                 <div class="flex flex-row">
@@ -47,7 +49,7 @@
                     <span :class="[checkPrice(coin.extendedInfo.CHANGE24HOUR.substr(2)) ? 'text-red' : 'text-green', 'flex-1 text-right']">{{coin.extendedInfo.CHANGE24HOUR}}</span>
                 </div>
                 <div class="flex row px-8 pt-4 px-4 font-medium">
-                    <span class="flex-1">Change(%)(24H):</span>
+                    <span class="flex-1">Change(24H)(%):</span>
                     <span :class="[checkPrice(coin.extendedInfo.CHANGEPCT24HOUR) ? 'text-red' : 'text-green', 'flex-1 text-right']">{{coin.extendedInfo.CHANGEPCT24HOUR}}%</span>
                 </div>
                 <div class="flex row px-8 pt-4 px-4 font-medium">
@@ -79,7 +81,8 @@ export default {
   },
     computed: {
         chartData() {
-            return this.$store.state.chartData
+            // return this.$store.state.chartData
+             return this.$store.state.chartLoading
         },
         horizontalChartData() {
             return this.$store.state.horizontalChartData
@@ -88,7 +91,7 @@ export default {
             return this.$store.state.verticleChartData
         },
         chartLoading(){
-            return this.$store.state.chartLoading
+            return this.$store.state.coinLoading
         },
         coin(){
             return this.$store.state.currentCoin
