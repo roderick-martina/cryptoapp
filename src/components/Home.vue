@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section style="overflow-x:hidden">
       <Search/>
       <section class="bg-brand-grey w-screen py-10 mt-10">
             <div class="container mx-auto">
@@ -21,6 +21,7 @@
                     </crypto-card>
             </div>
       </section>
+      <Footer/>
   </section>
 </template>
 <script>
@@ -28,6 +29,7 @@ import Search from '@/components/Search';
 import FilterButtons from '@/components/FilterButtons';
 import CryptoCard from '@/components/CryptoCard';
 import CryptoTitles from '@/components/CryptoTitles';
+import Footer from '@/components/Footer'
 
 export default {
     computed: {
@@ -49,6 +51,7 @@ export default {
         FilterButtons,
         CryptoCard,
         CryptoTitles,
+        Footer
         
     },
     methods: {

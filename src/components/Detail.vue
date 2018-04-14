@@ -57,16 +57,19 @@
             </div>
          </div>
     </section>
+    <Footer/>
     </section>
 </template>
 <script>
 import LineChart from '@/components/chart/LineChart'
 import Search from '@/components/Search';
+import Footer from '@/components/Footer'
 
 export default {
   components: {
-       LineChart,
-      Search
+        LineChart,
+        Search,
+        Footer
   },
     computed: {
         chartData() {
@@ -91,7 +94,7 @@ export default {
                         backgroundColor: '#6fa2fc',
                         borderColor: '#6772e5',
                         data: this.verticleChartData,
-                        lineTension: 0
+                        lineTension: 0,
                     }]
             }            
             return chartData
@@ -121,7 +124,7 @@ export default {
             } else {
                 return false
             }
-        }
+        },
   },
     data() {
         return{
@@ -144,13 +147,13 @@ export default {
                         },
                         gridLines: {
                             drawTicks: false,
-                            display: false
+                            display: true
                         }
                      }],
                     xAxes: [{
                         gridLines: {
                             drawTicks: false,
-                            display: false
+                            display: true
                         },
                         ticks: {
                             padding: 20,
@@ -158,6 +161,19 @@ export default {
                             fontStyle: "bold"
                         }
                     }]
+                },
+                tooltips: {
+                    // backgroundColor: "rgba(244,245,247,100)",
+                    // backgroundColor: "rgba(115,116,118,100)"
+                    xPadding: 12,
+                    yPadding: 12,
+                    // caretSize: 
+                    displayColors: false,
+                    callbacks: {
+                        afterTitle: function(tooltipItem,data) {
+                            return 'Close: '
+                        }
+                    }
                 }
             }
         }
