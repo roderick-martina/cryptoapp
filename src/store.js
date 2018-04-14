@@ -142,7 +142,7 @@ const mutations = {
         if(res.data.Response == "Error"){
           var msg = res.data.Message
           this.state.detailError.push(msg)
-          this.state.chartLoading = false
+          this.state.coinLoading = false
         }else {
           var data = res.data.Data[0].CoinInfo
         data.ImageUrl = 'https://www.cryptocompare.com' + data.ImageUrl

@@ -3,7 +3,7 @@
     <Search/>
     <section class="bg-brand-grey w-screen py-10 mt-10 ">
          <div class="container mx-auto">
-            <div v-if="chartLoading || chartData " class="h-full py-32">
+            <div v-if="chartLoading" class="h-full py-32">
                 <div class="lds-roller flex flex-row  w-full justify-center" style="margin-top:3.5rem"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
             <div v-if="error.length > 0" class="font-medium text-center w-full h-64">
@@ -12,7 +12,7 @@
                 <button class="rounded bg-brand-blue py-3 px-4 mt-4 font-medium text-white outline-none btn" @click="navToHome">Homepage</button>
             </div>
             <button v-if="!chartLoading && !chartData && error.length == 0" class="rounded bg-brand-blue py-3 px-4 font-medium text-white outline-none btn" @click="navToHome">Home</button>
-            <div v-if="!chartLoading && !chartData && error.length == 0" class="flex flex-row  w-full mt-10">
+            <div v-if="!chartLoading &&  !chartData && error.length == 0" class="flex flex-row  w-full mt-10">
                 
                 <LineChart  :data="Data" :options="this.options" class="" style=" width:70%; margin-right:5%"/>
                 <div class="rounded shadow bg-white flex flex-col" style="width:30%">
