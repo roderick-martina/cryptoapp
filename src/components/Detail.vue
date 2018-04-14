@@ -6,7 +6,11 @@
             <div v-if="chartLoading" class="h-full py-32">
                 <div class="lds-roller flex flex-row  w-full justify-center" style="margin-top:3.5rem"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
-            <div v-if="error.length > 0" class="font-medium text-center w-full h-64">{{error[0]}}</div>
+            <div v-if="error.length > 0" class="font-medium text-center w-full h-64">
+                {{error[0]}}
+                <p class="mt-1">Search for another currency or click the button to go the homepage</p>
+                <button class="rounded bg-brand-blue py-3 px-4 mt-4 font-medium text-white outline-none btn" @click="navToHome">Homepage</button>
+            </div>
             <div v-if="!chartLoading && error.length == 0" class="flex flex-row  w-full mt-10">
                 <LineChart  :data="Data" :options="this.options" class="" style=" width:70%; margin-right:5%"/>
                 <div class="rounded shadow bg-white flex flex-col" style="width:30%">
@@ -130,6 +134,11 @@ export default {
                 return false
             }
         },
+        navToHome() {
+            this.$router.push({
+                path: '/',
+            })
+        }
   },
     data() {
         return{
