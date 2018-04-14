@@ -40,6 +40,7 @@ export default {
                         backgroundColor: '#6fa2fc',
                         borderColor: '#6772e5',
                         data: this.verticleChartData,
+                        lineTension: 0
                     }]
             }            
             return chartData
