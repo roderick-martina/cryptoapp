@@ -3,11 +3,11 @@
                   <span class="mx-6">#</span>
                   <span class="w-64">Name And Description</span>
                   <span class="flex-1">Marketcap</span>
-                  <span class="ml-8 w-24">Price</span>
+                  <span class="flex-1">Price</span>
                   <span class="flex-1">Volume (24)</span>
                   <span class="flex-1">Circulating Supply</span>
-                  <span class="flex-1">Change (24h)</span>
-                  <span class="flex-1">Price graph (7d)</span>
+                  <span class="flex-1 text-center">Change (24h)</span>
+                  <!-- <span class="flex-1">Price graph (7d)</span> -->
               </div>
 </template>
 <script>

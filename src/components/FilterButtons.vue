@@ -1,8 +1,8 @@
 <template>
               <div class="flex flex-row">
-            <FilterSelectButton>All</FilterSelectButton>
-            <FilterSelectButton>Coins</FilterSelectButton>
-            <FilterSelectButton class="w-32">Token</FilterSelectButton>
+            <FilterSelectButton :options="['EUR','USD']" class="w-24"></FilterSelectButton>
+            <!-- <FilterSelectButton>Coins</FilterSelectButton>
+            <FilterSelectButton class="w-32">Token</FilterSelectButton> -->
             <div class="flex flex-row w-full justify-end">
             <Button class="mr-1" @click.native="nextPage">
                 <span slot="text" class="font-medium outline-none">Next 10</span>
@@ -30,11 +30,10 @@ export default {
         Button,
   },
   methods: {
-      nextPage() {
-          
+      nextPage() { 
           this.$store.commit('nextPage');
           this.$store.commit('initialLoad');
-      }
+      },
   }
 }
 </script>

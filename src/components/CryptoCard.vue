@@ -10,7 +10,7 @@
         <slot name="volume"></slot>
         <slot name="supply"></slot>
         <slot name="change"></slot>
-        <slot name="graph"></slot>
+        <!-- <slot name="graph"></slot> -->
     </div>
 </template>
 <script>

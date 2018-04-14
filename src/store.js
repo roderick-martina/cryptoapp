@@ -18,7 +18,9 @@ const state = {
     chartLoading: true,
     chartData: [],
     verticleChartData: [],
-    horizontalChartData: []
+    horizontalChartData: [],
+    currencys: ['EUR', 'USD'],
+    activeCurrency: 'EUR'
 
   }
 // mutations are operations that actually mutates the state.
@@ -27,7 +29,8 @@ const state = {
 // mutations must be synchronous and can be recorded by plugins
 // for debugging purposes
 const mutations = {
-    initialLoad(){
+    initialLoad(state){
+
       // axios.get('https://api.coinmarketcap.com/v1/ticker/', {
         this.state.cryptoList = []
         this.state.tmplist = []
@@ -35,8 +38,8 @@ const mutations = {
           params: {
 
             limit: 10,
-            tsym: 'EUR',
-            page: this.state.currentPage
+            tsym: state.activeCurrency,
+            page: state.currentPage
           }
         })
         .then(res => {
@@ -55,7 +58,7 @@ const mutations = {
               axios.get('https://min-api.cryptocompare.com/data/pricemultifull', {
                 params: {
                   fsyms: item.symbol,
-                  tsyms: 'EUR'
+                  tsyms: state.activeCurrency
                 }
               }).then(res => {
                 var cryptoName = Object.values(res.data.DISPLAY)[0]
@@ -71,6 +74,7 @@ const mutations = {
       this.state.currentPage ++;
     },
     search(searchQuery){
+      this.state.searchList = [] // empty search result list
       axios.get('https://min-api.cryptocompare.com/data/all/coinlist')
         .then(res => {
           var data =res.data.Data
@@ -151,9 +155,9 @@ const mutations = {
             this.state.chartLoading = false
         },[])
       }) 
-
-
-      
+    },
+    changeCurrencyValue(state,val){
+      state.activeCurrency = val
     }
   }
   

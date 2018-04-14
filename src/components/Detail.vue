@@ -67,8 +67,6 @@ export default {
         this.$store.commit('getHistoricalData',this.symbol)
       }
   },
-
-  
     data() {
         return{
             

@@ -10,11 +10,11 @@
                         <img class="w-6 h-6 " slot="image" :src="imageLink(coin.ImageUrl)"/>
                         <span class="ml-2 text-xl" slot="currency">{{coin.name}}</span>
                         <span class="flex-1" slot="marketCap">{{coin.extendedInfo.MKTCAP}}</span>
-                        <span class="ml-8 w-24" slot="price">{{coin.extendedInfo.PRICE}}</span>
+                        <span class="flex-1" slot="price">{{coin.extendedInfo.PRICE}}</span>
                         <span class="flex-1" slot="volume">{{coin.extendedInfo.TOTALVOLUME24HTO}}</span>
                         <span class="flex-1" slot="supply">{{coin.extendedInfo.SUPPLY}}</span>
-                        <span class="flex-1" slot="change">{{coin.extendedInfo.CHANGE24HOUR}}</span>
-                        <span class="flex-1" slot="graph"></span>
+                        <span :class="[checkPrice(coin.extendedInfo.CHANGEPCT24HOUR) ? 'text-red' : 'text-green'  , 'flex-1 text-center']" slot="change">{{coin.extendedInfo.CHANGEPCT24HOUR}}%</span>
+                        <!-- <span class="flex-1" slot="graph"></span> -->
                     </crypto-card>
             </div>
       </section>
@@ -34,6 +34,9 @@ export default {
         coins() {
             return this.$store.getters.getCryptoList;
         },
+        activeCurrency() {
+             return this.$store.state.activeCurrency;
+        }
     },
     components: {
         Search,
@@ -45,6 +48,14 @@ export default {
     methods: {
         imageLink(link) {
             return 'https://www.cryptocompare.com' + link;
+        },
+        checkPrice(str){
+            var char = str.substr(0, 1)
+            if (char == '-') {
+                return true
+            } else {
+                return false
+            }
         },
         navToDetail(sym) {
             this.$router.push({
