@@ -1,5 +1,5 @@
 <template>
-   <div class="flex flex-row mt-10 text-brand-grey-dark">
+   <div class="md:flex md:flex-row hidden md:mt-10 mt-4 text-brand-grey-dark">
                   <span class="mx-6">#</span>
                   <span class="w-64">Name And Description</span>
                   <span class="flex-1">Marketcap</span>

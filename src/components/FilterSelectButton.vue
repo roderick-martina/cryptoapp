@@ -1,5 +1,5 @@
 <template>
-  <div class="relative mr-1">
+  <div class="relative">
     <select v-model="selected" class="font-medium block appearance-none outline-none w-full bg-white text-black hover:border-grey px-4 py-3 pr-8 rounded shadow">
       <option v-for="(option, index) in options" :key="index" >{{option}}</option>
     </select>
