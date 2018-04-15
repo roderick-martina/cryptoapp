@@ -142,9 +142,9 @@ const mutations = {
           tsym: state.activeCurrency
         }
       }).then(res => {
-        if(res.data.Response == "Error" || res.data.Data.length < 1){
-          // var msg = res.data.Message
-          this.state.detailError.push('Could not retrive data for the selected coin.')
+        if(res.data.Response == "Error"){
+          var msg = res.data.Message
+          this.state.detailError.push(msg)
           this.state.coinLoading = false
         }else {
           var data = res.data.Data[0].CoinInfo
