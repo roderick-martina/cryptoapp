@@ -181,10 +181,14 @@ export default {
                 tooltips: {
                     xPadding: 12,
                     yPadding: 12,
+                    caretSize: 12,
                     displayColors: false,
                     callbacks: {
                         afterTitle: function(tooltipItem,data) {
                             return 'Close: '
+                        },
+                        title: function(tooltipItem,data) {
+                            return '';
                         }
                     }
                 }
