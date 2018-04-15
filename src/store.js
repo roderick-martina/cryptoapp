@@ -37,6 +37,9 @@ const mutations = {
     nextPage() {
       this.state.currentPage ++;
     },
+    prevPage() {
+      this.state.currentPage --;
+    },
     search(searchQuery){
       this.state.searchList = [] // empty search result list
       axios.get('https://min-api.cryptocompare.com/data/all/coinlist',{
