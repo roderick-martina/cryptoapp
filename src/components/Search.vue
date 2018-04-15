@@ -5,7 +5,7 @@
         <button @click="search()" ref="searchButton" class="bg-brand-blue outline-none py-3 px-4 rounded text-white text-lg mr-4">
             <svg class="h-6 w-6 fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/></svg>
         </button>
-        <div v-if="showDropdown"  ref="dropdownSearchBox" class="absolute z-10 mx-auto container h-48 bg-white rounded-b shadow-md mt-32 overflow-y-auto">
+        <div v-if="showDropdown"  ref="dropdownSearchBox" class="absolute z-10 pin-x mx-4 md:mx-auto md:container h-48 bg-white rounded-b shadow-md mt-32 overflow-y-auto">
           <div v-for="(result, index) in searchResult" :key="index"  @click="navToDetail(result)" class="px-6 py-2  border-t hover:bg-brand-grey font-medium">
               {{result.name}}
             </div>
