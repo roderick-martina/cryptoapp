@@ -60,7 +60,7 @@ const mutations = {
     },
     getTestSearchResult(state,searchQuery){
       this.state.searchResult = [] // empty search result list
-      this.state.loading = true // activate loading spinner
+      this.state.searchLoading = true // activate loading spinner
       const list = this.state.searchList;
       var options = {
         shouldSort: true,
