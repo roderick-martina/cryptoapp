@@ -1,68 +1,67 @@
 <template>
     <section style="overflow-x:hidden">
     <Search/>
-    <section class="bg-brand-grey w-screen py-10 mt-10 ">
+    <section class="bg-brand-grey w-screen md:py-10 py-4 md:mt-10 mt-4 ">
          <div class="container mx-auto">
-            <div v-if="chartLoading" class="h-full py-32">
-                <div class="lds-roller flex flex-row  w-full justify-center" style="margin-top:3.5rem"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            <div v-if="chartLoading" class="w-full flex flex-row md:mt-14 md:my-8 justify-center md:py-32 py-0">
+                <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
-            <div v-if="error.length > 0" class="font-medium text-center w-full h-64">
+            <div v-if="error.length > 0" class="font-medium text-center w-full">
                 {{error[0]}}
                 <p class="mt-1">Search for another currency or click the button to go the homepage</p>
                 <button class="rounded bg-brand-blue py-3 px-4 mt-4 font-medium text-white outline-none btn" @click="navToHome">Homepage</button>
             </div>
-            <button v-if="!chartLoading && !chartData && error.length == 0" class="rounded bg-brand-blue py-3 px-4 font-medium text-white outline-none btn" @click="navToHome">Home</button>
-            <div v-if="!chartLoading &&  !chartData && error.length == 0" class="flex flex-row  w-full mt-10">
-                
-                <LineChart  :data="Data" :options="this.options" class="" style=" width:70%; margin-right:5%"/>
-                <div class="rounded shadow bg-white flex flex-col" style="width:30%">
-                <div class="flex flex-row">
-                    <img class="w-6 h-6 ml-8 mt-4" slot="image" :src="coin.ImageUrl"/>
-                    <h2 class="ml-4 mt-4 text-xl font-normal">{{coin.FullName}}</h2>
-                </div>
-                <div class="flex row px-8 pt-4 px-4 font-medium">
-                    <span class="flex-1">Price:</span>
-                    <span class="flex-1 text-right">{{coin.extendedInfo.PRICE}}</span>
-                </div>
-                <div class="flex row px-8 pt-4 px-4 font-medium">
-                    <span class="flex-1">Marketcap:</span>
-                    <span class="flex-1 text-right">{{coin.extendedInfo.MKTCAP}}</span>
-                </div>
-                <div class="flex row px-8 pt-4 px-4 font-medium">
-                    <span class="flex-1">Supply:</span>
-                    <span class="w-full text-right">{{coin.extendedInfo.SUPPLY}}</span>
-                </div>
-                <div class="flex row px-8 pt-4 px-4 font-medium">
-                    <span class="flex-1">Open(24H):</span>
-                    <span class="flex-1 text-right">{{coin.extendedInfo.OPEN24HOUR}}</span>
-                </div>
-                <div class="flex row px-8 pt-4 px-4 font-medium">
-                    <span class="flex-1">High(24H):</span>
-                    <span class="flex-1 text-right">{{coin.extendedInfo.HIGH24HOUR}}</span>
-                </div>
-                <div class="flex row px-8 pt-4 px-4 font-medium">
-                    <span class="flex-1">Low(24H):</span>
-                    <span class="flex-1 text-right">{{coin.extendedInfo.LOW24HOUR}}</span>
-                </div>
-                <div class="flex row px-8 pt-4 px-4 font-medium">
-                    <span class="flex-1">Change(24H):</span>
-                    <span :class="[checkPrice(coin.extendedInfo.CHANGE24HOUR.substr(2)) ? 'text-red' : 'text-green', 'flex-1 text-right']">{{coin.extendedInfo.CHANGE24HOUR}}</span>
-                </div>
-                <div class="flex row px-8 pt-4 px-4 font-medium">
-                    <span class="flex-1">Change(24H)(%):</span>
-                    <span :class="[checkPrice(coin.extendedInfo.CHANGEPCT24HOUR) ? 'text-red' : 'text-green', 'flex-1 text-right']">{{coin.extendedInfo.CHANGEPCT24HOUR}}%</span>
-                </div>
-                <div class="flex row px-8 pt-4 px-4 font-medium">
-                    <span class="flex-1">Volume(24H):</span>
-                    <span class="flex-1 text-right">{{coin.extendedInfo.VOLUMEDAYTO}}</span>
-                </div>
-                <div class="flex row px-8 pt-4 px-4 font-medium">
-                    <span class="flex-1">Algorithm:</span>
-                    <span class="flex-1 text-right">{{coin.Algorithm}}</span>
-                </div>                
+            <button v-if="!chartLoading && !chartData && error.length == 0" class="ml-4 md:ml-0 rounded bg-brand-blue py-3 px-4 font-medium text-white outline-none btn" @click="navToHome">Home</button>
+                <div v-if="!chartLoading &&  !chartData && error.length == 0" class="flex flex-col md:flex-row w-full md:mt-10 mt-0">
+                    <LineChart  :data="Data" :options="this.options" class="md:w-2/3 w-full mt-4 md:mt-0"/>
+                    <div class="rounded shadow bg-white flex flex-col md:w-1/3 md:ml-4 md:mt-0 mt-4 w-full">
+                        <div class="flex flex-row">
+                            <img class="w-6 h-6 ml-8 mt-4" slot="image" :src="coin.ImageUrl"/>
+                            <h2 class="ml-4 mt-4 text-xl font-normal">{{coin.FullName}}</h2>
+                        </div>
+                        <div class="flex row px-8 pt-4 px-4 font-medium">
+                            <span class="flex-1">Price:</span>
+                            <span class="flex-1 text-right">{{coin.extendedInfo.PRICE}}</span>
+                        </div>
+                        <div class="flex row px-8 pt-4 px-4 font-medium">
+                            <span class="flex-1">Marketcap:</span>
+                            <span class="flex-1 text-right">{{coin.extendedInfo.MKTCAP}}</span>
+                        </div>
+                        <div class="flex row px-8 pt-4 px-4 font-medium">
+                            <span class="flex-1">Supply:</span>
+                            <span class="w-full text-right">{{coin.extendedInfo.SUPPLY}}</span>
+                        </div>
+                        <div class="flex row px-8 pt-4 px-4 font-medium">
+                            <span class="flex-1">Open(24H):</span>
+                            <span class="flex-1 text-right">{{coin.extendedInfo.OPEN24HOUR}}</span>
+                        </div>
+                        <div class="flex row px-8 pt-4 px-4 font-medium">
+                            <span class="flex-1">High(24H):</span>
+                            <span class="flex-1 text-right">{{coin.extendedInfo.HIGH24HOUR}}</span>
+                        </div>
+                        <div class="flex row px-8 pt-4 px-4 font-medium">
+                            <span class="flex-1">Low(24H):</span>
+                            <span class="flex-1 text-right">{{coin.extendedInfo.LOW24HOUR}}</span>
+                        </div>
+                        <div class="flex row px-8 pt-4 px-4 font-medium">
+                            <span class="flex-1">Change(24H):</span>
+                            <span :class="[checkPrice(coin.extendedInfo.CHANGE24HOUR.substr(2)) ? 'text-red' : 'text-green', 'flex-1 text-right']">{{coin.extendedInfo.CHANGE24HOUR}}</span>
+                        </div>
+                        <div class="flex row px-8 pt-4 px-4 font-medium">
+                            <span class="flex-1">Change(24H)(%):</span>
+                            <span :class="[checkPrice(coin.extendedInfo.CHANGEPCT24HOUR) ? 'text-red' : 'text-green', 'flex-1 text-right']">{{coin.extendedInfo.CHANGEPCT24HOUR}}%</span>
+                        </div>
+                        <div class="flex row px-8 pt-4 px-4 font-medium">
+                            <span class="flex-1">Volume(24H):</span>
+                            <span class="flex-1 text-right">{{coin.extendedInfo.VOLUMEDAYTO}}</span>
+                        </div>
+                        <div class="flex row px-8 py-4 px-4 font-medium">
+                            <span class="flex-1">Algorithm:</span>
+                            <span class="flex-1 text-right">{{coin.Algorithm}}</span>
+                        </div>                
+                    </div>
                 </div>
             </div>
-         </div>
     </section>
     <Footer/>
     </section>
