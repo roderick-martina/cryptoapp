@@ -11,7 +11,7 @@
                 {{result.name}}
               </div>
               <div v-show="loading" class="lds-roller flex flex-row  w-full justify-center pr-12" style="margin-top:3.5rem"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-              <span class="text-md font-medium pl-6 flex flex-row  w-full justify-center" style="margin-top:3.5rem" v-if="searchResult.length == 0 && !loading">No search result found :-(</span>
+              <span class="text-md font-medium pl-6 flex flex-row  w-full justify-center" style="margin-top:3.5rem" v-if="searchResult.length == 0 && !loading">No search result found 😭</span>
           </div>
         </div>
     </form>
