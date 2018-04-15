@@ -1,8 +1,8 @@
 <template>
               <div class="flex flex-row">
-            <FilterSelectButton :options="['EUR','USD']" class="md:w-24 md:ml-0 ml-4" style="width:6.75rem"></FilterSelectButton>
+            <FilterSelectButton :options="['EUR','USD']" class="lg:w-24 lg:ml-0 ml-4" style="width:6.75rem"></FilterSelectButton>
             <div class="flex flex-row w-full justify-end">
-                <Button class="md:mr-1 mr-4 flex flex-row-reverse" @click.native="prevPage" v-show="currentPage > 0">
+                <Button class="lg:mr-1 mr-4 flex flex-row-reverse" @click.native="prevPage" v-show="currentPage > 0">
                 <span slot="text" class="font-medium outline-none">Previous 10</span>
                 <span slot="svg">
                     <svg class="w-4 h-3 ml-1" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -13,7 +13,7 @@
                     </svg>
                 </span>
             </Button>
-                <Button class="md:mr-1 mr-4" @click.native="nextPage">
+                <Button class="lg:mr-1 mr-4" @click.native="nextPage">
                 <span slot="text" class="font-medium outline-none">Next 10</span>
                 <span slot="svg">
                     <svg class="w-4 h-3 ml-1" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
