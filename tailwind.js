@@ -177,6 +177,11 @@ module.exports = {
     'md': '768px',
     'lg': '992px',
     'xl': '1200px',
+
+    // 'sm': {'min': '576px', 'max': '767px'},
+    // 'md': {'min': '768px', 'max': '991px'},
+    // 'lg': {'min': '992px', 'max': '1999px'},
+    // 'xl': {'min': '1200px'},
   },
 
 
@@ -937,7 +942,7 @@ module.exports = {
 
   plugins: [
     require('tailwindcss/plugins/container')({
-      // center: true,
+      center: true,
       // padding: '1rem',
     }),
   ],
