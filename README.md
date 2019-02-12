@@ -3,7 +3,7 @@
 > Project for Flex Development portfolio
 
 ## TODO
-* Fix # bug
+* Fix index bug
 * Refactor vuex code
 
 ### Getting Started
